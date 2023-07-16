@@ -16,7 +16,7 @@ for(let i = 1; i < 10; i++){
 }
 const zero = document.createElement("button");
 zero.textContent = 0;
-zero.className = "zero";
+zero.classList.add("zero", "number-button");
 numbersContainer.appendChild(zero);
 
 const decimal = document.createElement("button");
@@ -71,7 +71,22 @@ function operate(op, num1, num2){
     }
 }
 
-console.log(operate("+", 1, 2));
-console.log(operate("-", 1, 2));
-console.log(operate("/", 1, 2));
-console.log(operate("x", 1, 2));
+// console.log(operate("+", 1, 2));
+// console.log(operate("-", 1, 2));
+// console.log(operate("/", 1, 2));
+// console.log(operate("x", 1, 2));
+
+let numberStr = "";
+function numberDisplay(num){
+    numberStr += num;
+    return numberStr;
+}
+
+const numberButtons = document.querySelectorAll(".number-button");
+const display = document.querySelector(".text-display")
+
+numberButtons.forEach(num => {
+    num.addEventListener("click", function(){
+        display.textContent = numberDisplay(num.textContent);
+    });
+});
