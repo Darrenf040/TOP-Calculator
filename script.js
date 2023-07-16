@@ -30,13 +30,17 @@ function add(...nums){
     });
     return sum;
 }
-function subtract(...nums){
-    let sum = nums[0];
-    for(let i = 1; i < nums.length; i++){
-        sum = sum - nums[i];
-    }
-    return sum;
-}
+let diff = 0;
+// function subtract(...nums){ //12 , 10
+//     let sum = 0;
+//         for(let i = 0; i < nums.length; i++){
+//             sum = result - nums[i];
+//         }
+//         if(nums.length > 1){
+//             sum = nums[0] - nums[1];
+//         }
+//     return sum;
+// }
 function multiply(...nums){
     let sum = 1;
     nums.forEach(num => {
@@ -44,30 +48,27 @@ function multiply(...nums){
     });
     return sum;
 }
+let prevNum;
 function divide(...nums){
-    let sum = nums[0];
-    for(let i = 1; i < nums.length; i++){
-        sum = sum / nums[i];
-    }
-    return sum;
+
 }
 // console.log(add(1, 2, 3, 4, 5));
 // console.log(subtract(10, 5, 1, 1, 1));
 // console.log(multiply(2, 2, 2));
 // console.log(divide(20, 2, 2, 2, 2));
 
-function operate(op, num1, num2){
+function operate(op, ...nums){
     if(op == "+"){
-        return add(num1, num2);
+        return add(...nums);
     }
     else if(op == "-"){
-        return subtract(num1, num2);
+        return subtract(...nums);
     }
     else if(op == "*" || op == "x"){
-        return multiply(num1, num2);
+        return multiply(...nums);
     }
     else if(op == "/"){
-        return divide(num1, num2);
+        return divide(prevNum);
     }
 }
 
@@ -89,4 +90,32 @@ numberButtons.forEach(num => {
     num.addEventListener("click", function(){
         display.textContent = numberDisplay(num.textContent);
     });
+});
+
+const operationButtons = document.querySelectorAll(".op");
+let result = 0;
+
+let currentOp;
+operationButtons.forEach(op => {
+    op.addEventListener("click", function(e){
+        display.textContent = numberStr;
+        if(numberStr.length == 0){
+            display.textContent = equalsResult;
+        }
+        let convert = Number(numberStr);
+        currentOp = op.textContent;
+        result = result + operate(currentOp, convert);
+        console.log(result);
+        numberStr = "";
+    });
+});
+
+let equalsResult;
+const equals = document.querySelector(".equals");
+equals.addEventListener("click", ()=> {
+    let convert = Number(numberStr);
+    result = operate(currentOp, result, convert);
+    equalsResult = result;
+    display.textContent = equalsResult;
+    numberStr = "";
 });
