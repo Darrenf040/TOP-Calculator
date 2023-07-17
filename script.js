@@ -23,59 +23,37 @@ const decimal = document.createElement("button");
 decimal.textContent = ".";
 numbersContainer.appendChild(decimal);
 
-function add(...nums){
-    let sum = 0;
-    nums.forEach(num => {
-        sum = sum + num;
-    });
-    return sum;
+function add(num1, num2){
+    return num1 + num2;
 }
-let diff = 0;
-// function subtract(...nums){ //12 , 10
-//     let sum = 0;
-//         for(let i = 0; i < nums.length; i++){
-//             sum = result - nums[i];
-//         }
-//         if(nums.length > 1){
-//             sum = nums[0] - nums[1];
-//         }
-//     return sum;
-// }
-function multiply(...nums){
-    let sum = 1;
-    nums.forEach(num => {
-        sum = sum * num;
-    });
-    return sum;
+function subtract(num1, num2){
+    return num1 - num2;
 }
-let prevNum;
-function divide(...nums){
+function muliply(num1, num2){
+    return num1 * num2;
+}
+function divide(num1, num2){
+    if(num2 == 0){
+        return "Cannot Divide By 0";
+    }
+    return num1 / num2;
+}
 
-}
-// console.log(add(1, 2, 3, 4, 5));
-// console.log(subtract(10, 5, 1, 1, 1));
-// console.log(multiply(2, 2, 2));
-// console.log(divide(20, 2, 2, 2, 2));
-
-function operate(op, ...nums){
+function operate(op, num1, num2){
     if(op == "+"){
-        return add(...nums);
+        return add(num1, num2);
     }
     else if(op == "-"){
-        return subtract(...nums);
+        return subtract(num1, num2);
     }
-    else if(op == "*" || op == "x"){
-        return multiply(...nums);
+    else if(op == "x"){
+        return muliply(num1, num2);
     }
     else if(op == "/"){
-        return divide(prevNum);
+        return divide(num1, num2);
     }
+        
 }
-
-// console.log(operate("+", 1, 2));
-// console.log(operate("-", 1, 2));
-// console.log(operate("/", 1, 2));
-// console.log(operate("x", 1, 2));
 
 let numberStr = "";
 function numberDisplay(num){
@@ -86,6 +64,8 @@ function numberDisplay(num){
 const numberButtons = document.querySelectorAll(".number-button");
 const display = document.querySelector(".text-display")
 
+
+
 numberButtons.forEach(num => {
     num.addEventListener("click", function(){
         display.textContent = numberDisplay(num.textContent);
@@ -93,29 +73,45 @@ numberButtons.forEach(num => {
 });
 
 const operationButtons = document.querySelectorAll(".op");
-let result = 0;
-
-let currentOp;
-operationButtons.forEach(op => {
-    op.addEventListener("click", function(e){
+operationButtons.forEach(op =>{
+    op.addEventListener("click", ()=>{
+        let operatorChosen = op.textContent;
+        numberStr = numberStr + " " + operatorChosen + " ";
         display.textContent = numberStr;
-        if(numberStr.length == 0){
-            display.textContent = equalsResult;
-        }
-        let convert = Number(numberStr);
-        currentOp = op.textContent;
-        result = result + operate(currentOp, convert);
-        console.log(result);
-        numberStr = "";
     });
 });
 
-let equalsResult;
+let convertArr = [];
+let opArr = [];
 const equals = document.querySelector(".equals");
-equals.addEventListener("click", ()=> {
-    let convert = Number(numberStr);
-    result = operate(currentOp, result, convert);
-    equalsResult = result;
-    display.textContent = equalsResult;
-    numberStr = "";
+equals.addEventListener("click", function(){
+    let split = numberStr.split(" ");
+    let j = 0;
+    let k = 0;
+    for(let i = 0; i < split.length; i++){
+        if(i % 2 == 0){
+            convertArr[j] = Number(split[i]);
+            split[i] = Number(split[i]);
+            j++;
+        }
+        else{
+            opArr[k] = split[i];
+            k++; 
+        }
+    }
+    console.log(split);
+    console.log(convertArr);
+    console.log(opArr);
+
+    let num1 = convertArr[0];
+    let num2 = 0;
+
+    for(let i = 0; i <  convertArr.length - 1; i++){
+        num2 = convertArr[i + 1];
+        prevResult = operate(opArr[i], num1, num2)
+        num1 = prevResult;
+        
+    }
+    console.log(prevResult);
+
 });
