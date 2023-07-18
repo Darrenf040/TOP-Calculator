@@ -81,9 +81,10 @@ numberButtons.forEach(num => {
 });
 
 const operationButtons = document.querySelectorAll(".op");
+let operatorChosen
 operationButtons.forEach(op =>{
     op.addEventListener("click", ()=>{
-        let operatorChosen = op.textContent;
+        operatorChosen = op.textContent;
         let opPos = numberStr.charAt(numberStr.length - 2);
         if(opPos  == '+' || opPos == '-' || opPos == '*' || opPos == '/'){
             return;
@@ -100,6 +101,9 @@ let convertArr = [];
 let opArr = [];
 const equals = document.querySelector(".equals");
 equals.addEventListener("click", function(){
+    if(numberStr[numberStr.length - 2] == operatorChosen){
+        return;
+    }
     let split = numberStr.split(" ");
     let j = 0;
     let k = 0;
@@ -114,9 +118,21 @@ equals.addEventListener("click", function(){
             k++; 
         }
     }
-    console.log("split: " + split);
-    console.log("real numbers: " + convertArr);
+    // if(split.length == 1){
+    //     return;
+    // }
+    // else if(split.length == 3 && split[2] == 0 && operatorChosen == "/"){
+    //     return split[0];
+    // }
+    // else if(split.length == 3 && split[2] == 0 && operatorChosen == "*"){
+    //     return split[0];
+    // }
+    console.log(split);
+    console.log(convertArr);
     console.log(opArr);
+    console.log(numberStr);
+    console.log(numberStr.length);
+
 
     let num1 = convertArr[0];
     let num2 = 0;
@@ -144,15 +160,14 @@ clearButton.addEventListener("click", ()=> {
 
 backspaceButton.addEventListener("click", ()=> {
         if(numberStr.charAt(numberStr.length - 1) == " "){
-            numberStr = numberStr.substring(0, numberStr.length - 2);
-            console.log(numberStr);
+            numberStr = numberStr.substring(0, numberStr.length - 3);
             display.textContent = numberStr;    
         }
         else{
             numberStr = numberStr.substring(0, numberStr.length - 1);
-            console.log(numberStr);
             display.textContent = numberStr;    
         }
+        console.log(numberStr);
 });
 
 decimal.addEventListener("click", ()=> {
@@ -162,5 +177,26 @@ decimal.addEventListener("click", ()=> {
 
  
 negativeButton.addEventListener("click", ()=> {
-
+    // let negSplit = numberStr.split(" ");
+    // let convert;
+    // let negNumber;
+    // let negStr;
+    // let replaceStr;
+    // if(negSplit.length == 1){
+    //     convert = Number(negSplit[0]);
+    //     negNumber = convert * -1;
+    //     display.textContent = negNumber;
+    // }
+    // else{
+    //     convert = Number(negSplit[negSplit.length - 1]);
+    //     if(!isNaN(convert) && convert > 0){
+    //         negNumber  = convert * -1;
+    //         console.log(negSplit);
+    //         negStr = negNumber.toString();
+    //         replaceStr = convert.toString();
+    //         console.log(negStr);
+    //         numberStr = numberStr.replace(replaceStr, negStr);
+    //         console.log(numberStr);
+    //     }
+    // }
 });
