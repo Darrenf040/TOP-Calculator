@@ -84,9 +84,14 @@ const operationButtons = document.querySelectorAll(".op");
 operationButtons.forEach(op =>{
     op.addEventListener("click", ()=>{
         let operatorChosen = op.textContent;
+        let opPos = numberStr.charAt(numberStr.length - 2);
+        if(opPos  == '+' || opPos == '-' || opPos == '*' || opPos == '/'){
+            return;
+        }
         numberStr = numberStr + " " + operatorChosen + " ";
         let displayText = numberStr;
         display.textContent = displayText;
+        
     });
 });
 let prevResult;
@@ -155,5 +160,7 @@ decimal.addEventListener("click", ()=> {
     display.textContent = numberStr;
 });
 
+ 
 negativeButton.addEventListener("click", ()=> {
+
 });
