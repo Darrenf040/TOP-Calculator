@@ -94,7 +94,6 @@ operationButtons.forEach(op =>{
         display.textContent = displayText;
         decSplit.pop();
         prevResultString = "";
-        console.log(decSplit);
     });
 });
 
@@ -163,6 +162,7 @@ backspaceButton.addEventListener("click", ()=> {
 
 let decSplit = [];
 decimal.addEventListener("click", ()=> {
+    decimal.style.opacity = "100%";
     for(let i = 0; i < prevResultString.length; i++){
         if(prevResultString.charAt(i) == "."){
             return;
@@ -178,7 +178,6 @@ decimal.addEventListener("click", ()=> {
         return;
     }
         
-    console.log(decSplit);
     numberStr += ".";
     display.textContent = numberStr;
 });
@@ -206,4 +205,15 @@ negativeButton.addEventListener("click", ()=> {
     //         console.log(numberStr);
     //     }
     // }
+});
+
+const allButtons = document.querySelectorAll("button");
+allButtons.forEach(button => {
+    button.addEventListener("click", ()=> {
+        button.style.opacity = "50%";
+
+        setTimeout(()=> {
+            button.style.opacity = "100%";
+        }, 125);
+    });
 });
