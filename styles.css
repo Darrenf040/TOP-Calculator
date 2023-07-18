@@ -9,13 +9,17 @@ body{
 }
 .calculator-frame{
     width: 400px;
-    border: 1px red solid;
+    background-color: gray;
     padding: 30px 20px;
 }
 .text-display{
     height: 100px;
-    background-color: gray;
     margin-bottom: 10px;
+    background-color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 .button-container{
     display: flex;
@@ -24,7 +28,8 @@ body{
 button{
     box-sizing: border-box;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 10%;
+    font-size: 16px;
 }
 .numbers-container{
     width: 75%;
@@ -48,4 +53,7 @@ button{
 }
 .zero{
     flex: 1;
+}
+.content-container{
+    height: 450px;
 }
