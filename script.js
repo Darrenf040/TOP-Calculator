@@ -92,16 +92,19 @@ operationButtons.forEach(op =>{
         numberStr = numberStr + " " + operatorChosen + " ";
         let displayText = numberStr;
         display.textContent = displayText;
-        
+        decSplit.pop();
+        prevResultString = "";
+        console.log(decSplit);
     });
 });
-let prevResult;
 
+let prevResult;
+let prevResultString = "";
 let convertArr = [];
 let opArr = [];
 const equals = document.querySelector(".equals");
 equals.addEventListener("click", function(){
-    if(numberStr[numberStr.length - 2] == operatorChosen){
+    if(numberStr[numberStr.length - 2] == operatorChosen || numberStr[numberStr.length - 1] == '.'){
         return;
     }
     let split = numberStr.split(" ");
@@ -118,21 +121,6 @@ equals.addEventListener("click", function(){
             k++; 
         }
     }
-    // if(split.length == 1){
-    //     return;
-    // }
-    // else if(split.length == 3 && split[2] == 0 && operatorChosen == "/"){
-    //     return split[0];
-    // }
-    // else if(split.length == 3 && split[2] == 0 && operatorChosen == "*"){
-    //     return split[0];
-    // }
-    console.log(split);
-    console.log(convertArr);
-    console.log(opArr);
-    console.log(numberStr);
-    console.log(numberStr.length);
-
 
     let num1 = convertArr[0];
     let num2 = 0;
@@ -144,10 +132,12 @@ equals.addEventListener("click", function(){
         
     }
     prevResult = Math.round(prevResult * 100) / 100;
+    prevResultString = prevResult.toString();
     numberStr = prevResult;
     display.textContent = numberStr;
     convertArr = [];
     numberStr = numberStr.toString();
+    decSplit.pop();
 });
 
 clearButton.addEventListener("click", ()=> {
@@ -156,6 +146,8 @@ clearButton.addEventListener("click", ()=> {
     display.textContent = "";
     num1 = "";
     prevResult = "";
+    decSplit.pop();
+    
 });
 
 backspaceButton.addEventListener("click", ()=> {
@@ -167,15 +159,30 @@ backspaceButton.addEventListener("click", ()=> {
             numberStr = numberStr.substring(0, numberStr.length - 1);
             display.textContent = numberStr;    
         }
-        console.log(numberStr);
 });
 
+let decSplit = [];
 decimal.addEventListener("click", ()=> {
+    for(let i = 0; i < prevResultString.length; i++){
+        if(prevResultString.charAt(i) == "."){
+            return;
+        }
+    }
+    if(numberStr.charAt(numberStr.length - 1) == '.'){
+        return;
+    }
+    if(decSplit.length == 0){
+        decSplit[0] = numberStr;
+    }
+    else if(decSplit.length >= 1){
+        return;
+    }
+        
+    console.log(decSplit);
     numberStr += ".";
     display.textContent = numberStr;
 });
 
- 
 negativeButton.addEventListener("click", ()=> {
     // let negSplit = numberStr.split(" ");
     // let convert;
