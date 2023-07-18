@@ -1,8 +1,16 @@
 const numbersContainer = document.querySelector(".numbers-container");
 
 const clearButton = document.createElement("button");
+clearButton.textContent = "clr";
+clearButton.className = "clear-button";
+
 const negativeButton = document.createElement("button");
+negativeButton.textContent = "(-)";
+negativeButton.className = "negative-button";
+
 const backspaceButton = document.createElement("button");
+backspaceButton.textContent = "backspace"
+backspaceButton.className = "backspace-button";
 
 numbersContainer.appendChild(clearButton);
 numbersContainer.appendChild(negativeButton);
@@ -46,7 +54,7 @@ function operate(op, num1, num2){
     else if(op == "-"){
         return subtract(num1, num2);
     }
-    else if(op == "x"){
+    else if(op == "*"){
         return muliply(num1, num2);
     }
     else if(op == "/"){
@@ -77,9 +85,11 @@ operationButtons.forEach(op =>{
     op.addEventListener("click", ()=>{
         let operatorChosen = op.textContent;
         numberStr = numberStr + " " + operatorChosen + " ";
-        display.textContent = numberStr;
+        let displayText = numberStr;
+        display.textContent = displayText;
     });
 });
+let prevResult;
 
 let convertArr = [];
 let opArr = [];
@@ -99,8 +109,8 @@ equals.addEventListener("click", function(){
             k++; 
         }
     }
-    console.log(split);
-    console.log(convertArr);
+    console.log("split: " + split);
+    console.log("real numbers: " + convertArr);
     console.log(opArr);
 
     let num1 = convertArr[0];
@@ -112,6 +122,38 @@ equals.addEventListener("click", function(){
         num1 = prevResult;
         
     }
-    console.log(prevResult);
+    prevResult = Math.round(prevResult * 100) / 100;
+    numberStr = prevResult;
+    display.textContent = numberStr;
+    convertArr = [];
+    numberStr = numberStr.toString();
+});
 
+clearButton.addEventListener("click", ()=> {
+    numberStr = "";
+    convertArr = [];
+    display.textContent = "";
+    num1 = "";
+    prevResult = "";
+});
+
+backspaceButton.addEventListener("click", ()=> {
+        if(numberStr.charAt(numberStr.length - 1) == " "){
+            numberStr = numberStr.substring(0, numberStr.length - 2);
+            console.log(numberStr);
+            display.textContent = numberStr;    
+        }
+        else{
+            numberStr = numberStr.substring(0, numberStr.length - 1);
+            console.log(numberStr);
+            display.textContent = numberStr;    
+        }
+});
+
+decimal.addEventListener("click", ()=> {
+    numberStr += ".";
+    display.textContent = numberStr;
+});
+
+negativeButton.addEventListener("click", ()=> {
 });
